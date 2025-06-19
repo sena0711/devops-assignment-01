@@ -1,8 +1,26 @@
-# macOS
-.DS_Store
 
-# Terraform
-*.tfstate
-*.tfstate.*
-.terraform/
+.terraform/                   
+*.tfstate                  
+*.tfstate.backup
+*.tfvars                   
+*.tfplan                  
+crash.log     
+override.tf
+override.tf.json
+
+.terraform.lock.hcl          
+
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+.DS_Store
+.idea/
+.vscode/
+
+*.tar
+*.log
+docker-compose.override.yml
 

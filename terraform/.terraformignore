@@ -1,0 +1,27 @@
+# Terraform system files
+.terraform/
+*.tfstate
+*.tfstate.*
+
+# IDE/Editor
+.vscode/
+.idea/
+
+# OS generated
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+*.zip
+*.tar.gz
+*.log
+
+# Python virtualenv
+.venv/
+__pycache__/
+
+# Node.js, just in case
+node_modules/
+
+# Git
+.git/
