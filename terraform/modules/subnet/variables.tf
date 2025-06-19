@@ -36,3 +36,8 @@ variable "create_nat_gateway" {
   type        = bool
   default     = true
 }
+variable "create_igw" {
+  description = "Whether to create Internet Gateway"
+  type        = bool
+  default     = true
+}
