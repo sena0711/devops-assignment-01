@@ -4,5 +4,17 @@ module "vpc" {
 
   vpc_cidr  = var.vpc_cidr
   name      = var.vpc_name
-  tags      = var.vpc_tags
+  tags      = var.general_tags
+}
+
+
+module "subnet" {
+  source = "./modules/subnet"
+
+  vpc_id          = module.vpc.vpc_id
+  azs             = var.azs
+  public_subnets  = var.public_subnets
+  private_subnets = var.private_subnets
+  name            = var.subnet_name
+  tags            = var.general_tags
 }
