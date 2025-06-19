@@ -32,3 +32,8 @@ variable "igw_id" {
   default     = null
   
 }
+variable "create_nat_gateway" {
+  description = "Whether to create NAT Gateway"
+  type        = bool
+  default     = true
+}

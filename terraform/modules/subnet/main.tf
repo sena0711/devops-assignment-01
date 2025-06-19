@@ -71,3 +71,69 @@ resource "aws_route_table_association" "public" {
   subnet_id      = aws_subnet.public[count.index].id
   route_table_id = aws_route_table.public.id
 }
+
+#######################################
+# Elastic IP for NAT Gateway
+#######################################
+
+resource "aws_eip" "nat" {
+  domain = "vpc"
+
+  tags = merge(
+    {
+      Name = "${var.name}-nat-eip"
+    },
+    var.tags
+  )
+}
+
+#######################################
+# NAT Gateway (must be in Public Subnet)
+#######################################
+
+resource "aws_nat_gateway" "this" {
+  allocation_id = aws_eip.nat.id
+  subnet_id     = aws_subnet.public[0].id  
+
+  tags = merge(
+    {
+      Name = "${var.name}-nat-gw"
+    },
+    var.tags
+  )
+}
+
+#######################################
+# Private Route Table
+#######################################
+
+resource "aws_route_table" "private" {
+  vpc_id = var.vpc_id
+
+  tags = merge(
+    {
+      Name = "${var.name}-private-rt"
+    },
+    var.tags
+  )
+}
+
+#######################################
+# Route to NAT Gateway
+#######################################
+
+resource "aws_route" "private_nat_access" {
+  route_table_id         = aws_route_table.private.id
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id         = aws_nat_gateway.this.id
+}
+
+#######################################
+# Associate Private Subnets with Private Route Table
+#######################################
+
+resource "aws_route_table_association" "private" {
+  count          = length(var.private_subnets)
+  subnet_id      = aws_subnet.private[count.index].id
+  route_table_id = aws_route_table.private.id
+}
