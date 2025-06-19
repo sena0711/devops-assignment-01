@@ -13,6 +13,7 @@ module "subnet" {
 
   vpc_id          = module.vpc.vpc_id
   azs             = var.azs
+  igw_id          = module.vpc.igw_id  # ⬅ IGW 연결
   public_subnets  = var.public_subnets
   private_subnets = var.private_subnets
   name            = var.subnet_name
