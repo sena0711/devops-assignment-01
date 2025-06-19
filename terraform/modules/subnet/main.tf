@@ -57,6 +57,7 @@ resource "aws_route_table" "public" {
 #######################################
 
 resource "aws_route" "public_internet_access" {
+  count                  = var.igw_id != null ? 1 : 0
   route_table_id         = aws_route_table.public.id
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = var.igw_id
@@ -77,6 +78,7 @@ resource "aws_route_table_association" "public" {
 #######################################
 
 resource "aws_eip" "nat" {
+  count  = var.create_nat_gateway ? 1 : 0
   domain = "vpc"
 
   tags = merge(
@@ -87,13 +89,15 @@ resource "aws_eip" "nat" {
   )
 }
 
+
 #######################################
 # NAT Gateway (must be in Public Subnet)
 #######################################
 
 resource "aws_nat_gateway" "this" {
-  allocation_id = aws_eip.nat.id
-  subnet_id     = aws_subnet.public[0].id  
+  count         = var.create_nat_gateway ? 1 : 0
+  allocation_id = aws_eip.nat[0].id
+  subnet_id     = aws_subnet.public[0].id
 
   tags = merge(
     {
@@ -123,9 +127,10 @@ resource "aws_route_table" "private" {
 #######################################
 
 resource "aws_route" "private_nat_access" {
+  count                  = var.create_nat_gateway ? 1 : 0
   route_table_id         = aws_route_table.private.id
   destination_cidr_block = "0.0.0.0/0"
-  nat_gateway_id         = aws_nat_gateway.this.id
+  nat_gateway_id         = aws_nat_gateway.this[0].id
 }
 
 #######################################

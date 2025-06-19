@@ -30,7 +30,6 @@ variable "igw_id" {
   description = "Internet Gateway ID for public subnets"
   type        = string
   default     = null
-  
 }
 variable "create_nat_gateway" {
   description = "Whether to create NAT Gateway"
