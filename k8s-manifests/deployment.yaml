@@ -1,20 +1,29 @@
-# deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: my-app
+  name: spring-hello
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: my-app
+      app: spring-hello
   template:
     metadata:
       labels:
-        app: my-app
+        app: spring-hello
     spec:
       containers:
-      - name: my-app
-        image: <your-ecr-uri>
-        ports:
-        - containerPort: 8080
+        - name: spring-hello
+          image: 207458591579.dkr.ecr.ap-northeast-2.amazonaws.com/my-spring-app:latest
+          ports:
+            - containerPort: 8080
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: topology.kubernetes.io/zone
+                    operator: In
+                    values:
+                      - ap-northeast-2c
+                      - ap-northeast-2a
