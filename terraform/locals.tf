@@ -12,5 +12,3 @@ locals {
   cluster_name = "labs-eks-cluster"
 
 }
-
-
