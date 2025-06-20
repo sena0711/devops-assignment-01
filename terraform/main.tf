@@ -52,8 +52,5 @@ module "eks" {
     }
   }
 
-  tags = {
-    Environment = "dev"
-    Terraform   = "true"
-  }
+  tags = local.general_tags
 }
