@@ -47,6 +47,7 @@ module "eks" {
       desired_size = 2
 
       instance_types = ["t4g.medium"]
+      ami_type       = "AL2_ARM_64" 
       capacity_type  = "ON_DEMAND"
     }
   }
