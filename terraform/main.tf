@@ -1,21 +1,23 @@
-# VPC 모듈 호출
+########################################
+# VPC Module (official)
+########################################
 module "vpc" {
-  source    = "./modules/vpc"
+  source  = "terraform-aws-modules/vpc/aws"
 
-  vpc_cidr  = var.vpc_cidr
-  name      = var.vpc_name
-  tags      = var.general_tags
+  name = var.vpc_name
+  cidr = var.vpc_cidr
+
+  azs             = var.azs
+  public_subnets  = var.public_subnets
+  private_subnets = var.private_subnets
+
+  enable_nat_gateway = true
+  single_nat_gateway = false
+  one_nat_gateway_per_az = true
+
+  enable_dns_hostnames = true
+  enable_dns_support   = true
+
+  tags = var.general_tags
 }
 
-module "subnet" {
-  source             = "./modules/subnet"
-  
-  vpc_id             = module.vpc.vpc_id
-  igw_id             = module.vpc.igw_id
-  name               = "labs"
-  tags               = var.general_tags
-  azs                = var.azs
-  public_subnets     = var.public_subnets
-  private_subnets    = var.private_subnets
-  create_nat_gateway = true
-}
