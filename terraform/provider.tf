@@ -1,10 +1,10 @@
 terraform {
-  required_version = ">= 1.12.0"
+  required_version = ">= 1.8.0"
 
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = ">= 5.0.0"
+      version = ">= 5.95, < 6.0.0"
     }
   }
 
@@ -18,7 +18,7 @@ terraform {
 }
 
 provider "aws" {
-  region = var.aws_region
+  region = local.aws_region
 }
 
 
@@ -26,3 +26,4 @@ variable "TFC_AWS_RUN_ROLE_ARN" {
   description = "ARN for the AWS role used by Terraform Cloud"
   type        = string
 }
+
