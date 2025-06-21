@@ -46,6 +46,14 @@ provider "helm" {
 
 provider "aws" {
   region = local.aws_region
-  access_key = "YOUR_ACCESS_KEY"
-  secret_key = "YOUR_SECRET_KEY"
+  access_key = var.aws_access_key_id
+  secret_key = var.aws_secret_access_key
+}
+
+variable "aws_access_key_id" {
+  type = string
+}
+
+variable "aws_secret_access_key" {
+  type = string
 }
