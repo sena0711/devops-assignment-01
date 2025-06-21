@@ -9,6 +9,7 @@ resource "kubernetes_manifest" "alb_ingressclassparams" {
       scheme = "internet-facing"
     }
   }
+  depends_on = [helm_release.alb_controller]
 }
 
 resource "kubernetes_manifest" "alb_ingressclass" {
