@@ -21,9 +21,35 @@ terraform init
 terraform plan
 terraform apply
 ```
+OIDC Role을 통해 Terraform으로 EKS 클러스터 생성
+이 때 사용된 IAM Role은 EKS 클러스터에는 자동으로 권한이 부여되지 않음
 
-terraform , aws oidc 를 사용해서 진행하였다면 console 에서 본인이 사용하는 롤 또는 아이디를 등록후 
-kubectl edit configmap aws-auth -n kube-system -o yaml 에서 본인 아이디를 등록해야 
-kubeconfig 가  가능해진다. 
+Console에서 접근할 사용자 또는 Role 확인
+EKS → Configuration → Access 탭에서 현재 연결된 IAM 사용자/역할 확인
+
+terraform이 사용하는 assume-role ARN을 복사
+예: arn:aws:iam::<ACCOUNT_ID>:role/<your-terraform-role>
+
+kubectl edit configmap aws-auth -n kube-system
 
 aws eks --region ap-northeast-2 update-kubeconfig --name labs-eks-cluster --profile kube
+
+you will be adding something like below. 
+
+'''bash
+    - groups:
+      - system:bootstrappers
+      - system:nodes
+      rolearn: arn:aws:iam::207458591579:role/default-eks-node-group-20250621064845411200000002
+      username: system:node:{{EC2PrivateDNSName}}
+    - groups:
+      - system:bootstrappers
+      - system:masters
+      rolearn: arn:aws:iam::207458591579:role/allow-terraform-test
+      username: terraform
+    - groups:
+      - system:bootstrappers
+      - system:masters
+      rolearn: arn:aws:iam::207458591579:role/allow-full-access
+      username: admin
+'''

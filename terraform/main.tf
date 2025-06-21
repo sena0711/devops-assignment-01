@@ -54,22 +54,3 @@ module "eks" {
 
   tags = local.general_tags
 }
-
-module "aws_auth" {
-  source = "terraform-aws-modules/eks/aws//modules/aws-auth"
-  version = "20.8.4"
-
-  manage_aws_auth_configmap = true
-
-  
-  # 클러스터가 생성된 이후 실행되도록 의존성 추가
-  depends_on = [module.eks]
-
-  aws_auth_roles = [
-    {
-      rolearn  = "arn:aws:iam::207458591579:role/allow-full-access"
-      username = "allow-full-access"
-      groups   = ["system:masters"]
-    },
-  ]
-}

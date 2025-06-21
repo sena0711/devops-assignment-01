@@ -8,7 +8,7 @@ terraform {
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = "~> 2.0"
+      version = ">= 2.20"
     }
   }
 
@@ -23,12 +23,6 @@ terraform {
 
 provider "aws" {
   region = local.aws_region
-}
-
-provider "kubernetes" {
-  host                   = module.eks.cluster_endpoint
-  cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
-  token                  = data.aws_eks_cluster_auth.this.token
 }
 
 variable "TFC_AWS_RUN_ROLE_ARN" {
