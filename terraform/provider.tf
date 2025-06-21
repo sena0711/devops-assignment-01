@@ -46,10 +46,6 @@ provider "helm" {
 
 provider "aws" {
   region = local.aws_region
+  access_key = "YOUR_ACCESS_KEY"
+  secret_key = "YOUR_SECRET_KEY"
 }
-
-variable "TFC_AWS_RUN_ROLE_ARN" {
-  description = "ARN for the AWS role used by Terraform Cloud"
-  type        = string
-}
-
