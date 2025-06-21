@@ -19,7 +19,7 @@ resource "helm_release" "alb_controller" {
   ]
 
   depends_on = [
-    module.alb_controller
+    module.alb_controller,
     module.eks
   ]
 }
