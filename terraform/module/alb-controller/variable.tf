@@ -17,3 +17,8 @@ variable "iam_role_name" {
   type        = string
   default = "AmazonEKSLoadBalancerControllerRole"
 }
+
+variable "alb_policy_arn" {
+  default = "arn:aws:iam::207458591579:policy/AWSLoadBalancerControllerIAMPolicy"
+}
+
