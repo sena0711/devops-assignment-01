@@ -29,7 +29,7 @@ module "vpc" {
 
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "20.8.4" # Use the latest stable version
+  version = "20.37.1" # Use the latest stable version
 
   cluster_name    = local.cluster_name
   cluster_version = "1.29"
@@ -60,6 +60,10 @@ module "aws_auth" {
   version = "20.8.4"
 
   manage_aws_auth_configmap = true
+
+  
+  # 클러스터가 생성된 이후 실행되도록 의존성 추가
+  depends_on = [module.eks]
 
   aws_auth_roles = [
     {
