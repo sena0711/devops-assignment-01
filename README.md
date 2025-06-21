@@ -114,7 +114,7 @@ Final Checklist
 
  Terraform uses OIDC-based role, not static credentials
 
-📷 Screenshots & Diagrams
+Screenshots & Diagrams
 See images/ directory for:
 
 OIDC role trust settings
