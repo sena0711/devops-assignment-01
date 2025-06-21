@@ -35,22 +35,27 @@ module "eks" {
   cluster_version = "1.29"
 
   cluster_endpoint_public_access  = true
-  cluster_endpoint_private_access = false
+  cluster_endpoint_private_access = true
 
   vpc_id     = module.vpc.vpc_id
   subnet_ids = module.vpc.private_subnets
 
   eks_managed_node_groups = {
     default = {
+      name          = "eks-nodegroup"
+
       min_size     = 1
       max_size     = 3
       desired_size = 2
+      subnet_ids      = module.vpc.private_subnets
 
       instance_types = ["t4g.medium"]
       ami_type       = "AL2_ARM_64" 
       capacity_type  = "ON_DEMAND"
     }
   }
+  manage_aws_auth = true  # eks-auth ConfigMap 관리를 Terraform이 수행
+
 
   tags = local.general_tags
 }
