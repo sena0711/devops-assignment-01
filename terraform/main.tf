@@ -42,7 +42,7 @@ module "eks" {
   version = "20.37.1" # Use the latest stable version
 
   cluster_name    = local.cluster_name
-  cluster_version = "1.31"
+  cluster_version = "1.29"
 
   # EKS Addons
   cluster_addons = {
