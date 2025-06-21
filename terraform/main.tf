@@ -83,6 +83,7 @@ module "eks" {
 module "alb_controller" {
   source = "./module/alb-controller"
 
+  cluster_name        = local.cluster_name
   oidc_provider_arn = data.aws_iam_openid_connect_provider.oidc.arn
   oidc_provider_url = replace(data.aws_eks_cluster.cluster.identity[0].oidc[0].issuer, "https://", "")
   iam_role_name     = "AmazonEKSLoadBalancerControllerRole"
