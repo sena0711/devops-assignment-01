@@ -54,3 +54,18 @@ module "eks" {
 
   tags = local.general_tags
 }
+
+module "aws_auth" {
+  source = "terraform-aws-modules/eks/aws//modules/aws-auth"
+  version = "20.8.4"
+
+  manage_aws_auth_configmap = true
+
+  aws_auth_roles = [
+    {
+      rolearn  = "arn:aws:iam::207458591579:role/allow-full-access"
+      username = "allow-full-access"
+      groups   = ["system:masters"]
+    },
+  ]
+}
