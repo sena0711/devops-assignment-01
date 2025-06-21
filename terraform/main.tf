@@ -78,7 +78,7 @@ module "eks" {
 }
 
 ########################################
-# alb_controller (custom)
+# alb_controller (custom) add lbclass
 ########################################
 module "alb_controller" {
   source = "./module/alb-controller"
