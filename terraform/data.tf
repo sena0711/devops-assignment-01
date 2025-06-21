@@ -8,11 +8,12 @@ data "aws_availability_zones" "available" {
 }
 
 data "aws_eks_cluster" "cluster" {
-  name = local.cluster_name
+  name = module.eks.cluster_name
+  depends_on = [module.eks]
 }
 
 data "aws_eks_cluster_auth" "cluster" {
-  name = local.cluster_name
+  name = module.eks.cluster_name
 }
 
 data "aws_iam_openid_connect_provider" "oidc" {
