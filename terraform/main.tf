@@ -19,6 +19,16 @@ module "vpc" {
   enable_dns_hostnames = true
   enable_dns_support   = true
 
+  
+  public_subnet_tags = {
+    "kubernetes.io/role/elb" = 1
+  }
+
+  private_subnet_tags = {
+    "kubernetes.io/role/internal-elb" = 1
+  }
+
+
   tags = local.general_tags
 }
 
@@ -32,10 +42,19 @@ module "eks" {
   version = "20.37.1" # Use the latest stable version
 
   cluster_name    = local.cluster_name
-  cluster_version = "1.29"
+  cluster_version = "1.31"
+
+  # EKS Addons
+  cluster_addons = {
+    coredns                = {}
+    eks-pod-identity-agent = {}
+    kube-proxy             = {}
+    vpc-cni                = {}
+  }
 
   cluster_endpoint_public_access  = true
   cluster_endpoint_private_access = true
+  enable_cluster_creator_admin_permissions = true
 
   vpc_id     = module.vpc.vpc_id
   subnet_ids = module.vpc.private_subnets
@@ -54,8 +73,6 @@ module "eks" {
       capacity_type  = "ON_DEMAND"
     }
   }
-  manage_aws_auth = true  # eks-auth ConfigMap 관리를 Terraform이 수행
-
 
   tags = local.general_tags
 }
