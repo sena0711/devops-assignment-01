@@ -7,21 +7,16 @@
 
 Amazon EKS 위에 Spring Boot 애플리케이션을 배포하기 위한 매니페스트 파일 모음입니다.
 
-# for ingress controller
-eksctl create iamserviceaccount \
-  --name aws-load-balancer-controller \
-  --namespace kube-system \
-  --cluster labs-eks-cluster \
-  --role-name AmazonEKSLoadBalancerControllerRole \
-  --attach-policy-arn arn:aws:iam::<ACCOUNT_ID>:policy/AWSLoadBalancerControllerIAMPolicy \
-  --approve \
-  --override-existing-serviceaccounts \
-  --profile kasa-playground
 
 ## 배포 방법
 
+kubectl apply -f https://github.com/aws/eks-charts/raw/master/stable/aws-load-balancer-controller/crds/crds.yaml
+
 ```bash
+kubectl apply -f ./ingress-class/alb-ingressclassparams.yaml
+kubectl apply -f ./ingress-class/alb-ingressclass.yaml
+
 
 kubectl apply -f deployment.yaml
 kubectl apply -f service.yaml
-kubectl apply -f ingress.yaml
+kubectl apply -f public-ingress.yaml

@@ -21,10 +21,12 @@ module "vpc" {
 
   
   public_subnet_tags = {
+    "kubernetes.io/cluster/${local.cluster_name}" = "shared"
     "kubernetes.io/role/elb" = 1
   }
 
   private_subnet_tags = {
+    "kubernetes.io/cluster/${local.cluster_name}" = "shared"
     "kubernetes.io/role/internal-elb" = 1
   }
 
@@ -73,6 +75,8 @@ module "eks" {
       capacity_type  = "ON_DEMAND"
     }
   }
+  map_roles    = var.map_roles
+  map_users    = var.map_users
 
   tags = local.general_tags
 }

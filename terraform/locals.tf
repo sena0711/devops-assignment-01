@@ -10,5 +10,23 @@ locals {
     Owner       = "infra"
   }
   cluster_name = "labs-eks-cluster"
-
+  map_accounts =  [
+    "777777777777",
+    "888888888888",
+  ]
+  map_roles = [
+    {
+      rolearn  = "arn:aws:iam::207458591579:role/allow-terraform-test"
+      username = "terraform"
+      groups   = ["system:masters"]
+    },
+  ]
+  map_users = [
+    {
+      userarn  = "arn:aws:iam::207458591579:role/allow-full-access"
+      username = "master"
+      groups   = ["system:masters"]
+    }
+  ]
 }
+

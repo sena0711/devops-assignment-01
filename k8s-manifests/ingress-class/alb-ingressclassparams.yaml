@@ -1,0 +1,6 @@
+apiVersion: elbv2.k8s.aws/v1beta1  # ← 정확한 API 그룹
+kind: IngressClassParams
+metadata:
+  name: public-alb-params
+spec:
+  scheme: internet-facing
