@@ -14,7 +14,7 @@ Terraform을 사용하여 AWS에 다음 리소스를 구성합니다:
 
 1. Terraform Cloud에서 workspace 및 backend 설정 (`backend.tf`)
 2. 환경 변수 설정 (Terraform Cloud 또는 로컬 `.tfvars`)
-3. 초기화 및 적용
+3. 초기화 및 적용.
 
 ```bash
 terraform init
