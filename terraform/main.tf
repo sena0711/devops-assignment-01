@@ -75,11 +75,10 @@ module "eks" {
       capacity_type  = "ON_DEMAND"
     }
   }
-  map_roles    = var.map_roles
-  map_users    = var.map_users
 
   tags = local.general_tags
 }
+
 
 ########################################
 # alb_controller (custom) add lbclass
