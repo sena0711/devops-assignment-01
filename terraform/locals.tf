@@ -38,7 +38,7 @@ locals {
     }
   ]
   aws_auth_data = {
-    mapRoles    = yamlencode(local.eks_aws_roles)
+    mapRoles    = yamlencode(local.map_roles)
     mapUsers    = yamlencode(local.map_users)
     mapAccounts = yamlencode(local.map_accounts)
   }
