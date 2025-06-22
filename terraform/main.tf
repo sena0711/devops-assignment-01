@@ -92,3 +92,17 @@ module "alb_controller" {
 
   depends_on = [module.eks]
 }
+
+
+resource "kubernetes_config_map_v1_data" "aws_auth" {
+  metadata {
+    name      = "aws-auth"
+    namespace = "kube-system"
+  }
+
+  data  = local.aws_auth_data
+  force = true
+
+  depends_on = [
+    module.eks
+  ]
